@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YEETCoin ($YEET) - Throw It All In</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-yellow: #FFFF00;
+            --neon-green: #00FF00;
+            --pitch-black: #000000;
+            --dark-gray: #1A1A1A;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @keyframes glitch {
+            0% {
+                transform: translate(2px, 2px);
+                filter: hue-rotate(0deg);
+            }
+            33% {
+                transform: translate(-2px, 1px);
+                filter: hue-rotate(2deg);
+            }
+            66% {
+                transform: translate(1px, -2px);
+                filter: hue-rotate(-2deg);
+            }
+            100% {
+                transform: translate(-1px, -1px);
+                filter: hue-rotate(0deg);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                text-shadow: 0 0 10px var(--neon-green);
+            }
+            50% {
+                transform: scale(1.05);
+                text-shadow: 0 0 20px var(--neon-green), 0 0 30px var(--neon-green);
+            }
+            100% {
+                transform: scale(1);
+                text-shadow: 0 0 10px var(--neon-green);
+            }
+        }
+
+        @keyframes flicker {
+            0% {
+                opacity: 1;
+            }
+            25% {
+                opacity: 0.85;
+            }
+            50% {
+                opacity: 0.95;
+            }
+            75% {
+                opacity: 0.8;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                right: -100%;
+            }
+            to {
+                right: 10px;
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-10px) rotate(2deg);
+            }
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+        }
+
+        body {
+            font-family: 'Fira Code', monospace;
+            background: var(--pitch-black);
+            color: white;
+            line-height: 1.5;
+            overflow-x: hidden;
+            animation: glitch 2s infinite;
+            animation-timing-function: steps(5);
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .background-texture {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 30%, rgba(255, 255, 0, 0.3) 10%, transparent 30%),
+                        radial-gradient(circle at 80% 20%, rgba(255, 255, 0, 0.2) 5%, transparent 25%),
+                        radial-gradient(circle at 40% 80%, rgba(255, 255, 0, 0.3) 15%, transparent 35%),
+                        radial-gradient(circle at 70% 60%, rgba(255, 255, 0, 0.25) 8%, transparent 30%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .jagged-arrow {
+            position: fixed;
+            bottom: 0;
+            right: 5%;
+            width: 50vh;
+            height: 50vh;
+            background: linear-gradient(45deg, transparent 49%, rgba(0, 255, 0, 0.2) 50%, transparent 51%);
+            clip-path: polygon(50% 0%, 0% 100%, 40% 100%, 60% 40%, 80% 100%, 100% 100%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        h1, h2 {
+            font-family: 'Luckiest Guy', cursive;
+            color: var(--neon-yellow);
+            text-transform: uppercase;
+            text-shadow: 0 0 10px var(--neon-green);
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 4rem;
+            text-align: center;
+            animation: pulse 1.5s infinite;
+            letter-spacing: 2px;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-top: 2rem;
+        }
+
+        .glassmorphic-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--neon-green);
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+        }
+
+        .stats-block {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin: 2rem 0;
+            gap: 1rem;
+        }
+
+        .stat-item {
+            font-family: 'Fira Code', monospace;
+            font-size: 1.2rem;
+            color: var(--neon-yellow);
+            background: rgba(0, 0, 0, 0.5);
+            padding: 1rem 1.5rem;
+            border-radius: 4px;
+            animation: flicker 1s infinite alternate;
+            box-shadow: 0 0 10px rgba(255, 255, 0, 0.2);
+        }
+
+        .team-section {
+            border: 2px solid var(--neon-yellow);
+            box-shadow: 0 0 20px var(--neon-yellow);
+            padding: 1.5rem;
+            text-align: center;
+            margin: 2rem 0;
+            border-radius: 8px;
+        }
+
+        .yeet-button {
+            display: block;
+            width: max-content;
+            margin: 2rem auto;
+            background: var(--neon-yellow);
+            color: var(--pitch-black);
+            font-family: 'Luckiest Guy', cursive;
+            font-size: 1.5rem;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+        }
+
+        .yeet-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px var(--neon-green);
+        }
+
+        .ticker {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.875rem;
+            color: var(--neon-green);
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            border-left: 2px solid var(--neon-green);
+            animation: slideIn 1s forwards;
+            z-index: 10;
+        }
+
+        .manifesto {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.7);
+            border-left: 4px solid var(--neon-yellow);
+            font-size: 1.125rem;
+        }
+
+        .highlight {
+            color: var(--neon-yellow);
+            font-weight: bold;
+        }
+
+        /* Splatter Effects */
+        .splatter {
+            position: absolute;
+            background: rgba(255, 255, 0, 0.3);
+            border-radius: 50%;
+            filter: blur(15px);
+            transform: rotate(calc(var(--rotation) * 1deg));
+            pointer-events: none;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            h2 {
+                font-size: 2rem;
+            }
+            .stats-block {
+                flex-direction: column;
+            }
+            .ticker {
+                position: static;
+                margin: 1rem 0;
+                animation: none;
+            }
+            .container {
+                padding: 1rem;
+            }
+            .jagged-arrow {
+                width: 30vh;
+                height: 30vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-texture"></div>
+    <div class="jagged-arrow"></div>
+
+    <!-- Ticker -->
+    <div class="ticker" id="ticker">
+        $YEET: +420% | -69% | YEETED
+    </div>
+
+    <div class="container">
+        <section id="about-yeet">
+            <h1>YEETCOIN: THROW IT ALL IN</h1>
+
+            <div class="glassmorphic-box">
+                <p>The coin that yeets your bags to the moon—or the dumpster. No regrets, just chaos. Launched on Pump.fun by a crew of degens who yeeted their SOL and lived.</p>
+            </div>
+
+            <div class="stats-block">
+                <div class="stat-item">Supply: 69B $YEET</div>
+                <div class="stat-item">Burned: 6.9% (First Yeet)</div>
+                <div class="stat-item">Tagline: Yeet it and weep it</div>
+            </div>
+
+            <div class="team-section">
+                <h3>The Yeet Lords</h3>
+                <p>Anon degens who yeeted their 9-5s.</p>
+            </div>
+
+            <a href="https://x.com/YEETedBags" class="yeet-button">YEET NOW</a>
+
+            <h2>THE YEET MANIFESTO</h2>
+            <div class="manifesto">
+                <p>In the chaotic void of crypto, only the boldest survive. <span class="highlight">$YEET</span> is not a safe investment. <span class="highlight">$YEET</span> is not a "project." <span class="highlight">$YEET</span> is pure, unbridled chaos energy wrapped in a token.</p>
+                <br>
+                <p>We don't promise lambos or homes. We promise an experience—the heart-pounding rush of throwing everything at something so absurd it just might work. Or not. That's the beauty of the <span class="highlight">YEET</span>.</p>
+                <br>
+                <p>This is financial advice: <span class="highlight">YEET</span> responsibly. Or irresponsibly. It's your choice. That's freedom. That's crypto. That's <span class="highlight">$YEET</span>.</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Random Splatters (Generated by JS) -->
+    <script>
+        // Create random splatter effects
+        function createSplatters() {
+            const body = document.body;
+            for (let i = 0; i < 10; i++) {
+                const splatter = document.createElement('div');
+                splatter.classList.add('splatter');
+                
+                // Random position
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                
+                // Random size
+                const size = 50 + Math.random() * 150;
+                
+                // Random rotation
+                const rotation = Math.random() * 360;
+                
+                // Set splatter styles
+                splatter.style.left = `${x}vw`;
+                splatter.style.top = `${y}vh`;
+                splatter.style.width = `${size}px`;
+                splatter.style.height = `${size}px`;
+                splatter.style.setProperty('--rotation', rotation);
+                
+                body.appendChild(splatter);
+            }
+        }
+
+        // Rotate ticker content
+        function rotateTicker() {
+            const ticker = document.getElementById('ticker');
+            const contents = [
+                "$YEET: +420% | -69% | YEETED",
+                "$YEET: MOON SOON | HODL | WEN LAMBO",
+                "$YEET: DUMPING | PUMPING | WHO KNOWS?",
+                "$YEET: TO THE MOON | OR DUMPSTER | YOLO"
+            ];
+            let index = 0;
+            
+            setInterval(() => {
+                index = (index + 1) % contents.length;
+                ticker.textContent = contents[index];
+            }, 3000);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            createSplatters();
+            rotateTicker();
+        });
+    </script>
+</body>
+</html>
